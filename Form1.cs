@@ -13,6 +13,7 @@ namespace ShoppingCart
 {
     public partial class Form1 : Form
     {
+        // We need 2 seperate lists for list of products and cart items.
         readonly ArrayList cartItems = new ArrayList();
         readonly List<Product> products = new List<Product>();
         public Form1()
@@ -34,6 +35,7 @@ namespace ShoppingCart
             products.Add(new Product("Red Chilli", 1.89m));
             products.Add(new Product("Unwashed Potatoes", 2.99m));
 
+            // Displays the list in the List Box
             ProductsListBox.DataSource = products;
             ProductsListBox.DisplayMember = "Name";
         }
@@ -42,25 +44,26 @@ namespace ShoppingCart
         {
             int selectedIndex = ProductsListBox.SelectedIndex;
 
-            if (selectedIndex >= 0)
-            {
-                Product selectedProduct = products[selectedIndex];
-                cartItems.Add(selectedProduct);
-                ShoppingCartListBox.Items.Add(selectedProduct.Name);
-            }
+            // Adds the product to the cart
+            Product selectedProduct = products[selectedIndex];
+            cartItems.Add(selectedProduct);
+            ShoppingCartListBox.Items.Add(selectedProduct.Name);
         }
 
         private void CheckOutButton_Click(object sender, EventArgs e)
         {
             {
+                // Calculates total when Check Out button is clicked.
                 decimal total = Product.TotalCalc(cartItems.OfType<Product>());
                 string message = "Items in your cart:\n\n";
 
                 foreach (Product product in cartItems)
                 {
+                    // Concatonates a string with the product's name and price in the Product ArrayList
                     message += $"{product.Name} - ${product.Price}\n";
                 }
 
+                // Adds the total to the end of the string and finally displays it in a MessageBox
                 message += $"\nTotal: ${total}";
 
                 MessageBox.Show(message, "Total");

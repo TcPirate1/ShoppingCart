@@ -19,6 +19,7 @@ namespace ShoppingCart
 
         public static decimal TotalCalc(IEnumerable<Product> products)
         {
+            // This method returns the sum of the items added to cart.
             return products.Sum(p => p.Price);
         }
     }
